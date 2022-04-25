@@ -1,1 +1,88 @@
 PARTICIPANTS: use this file for creating the class diagram in mastery task 01
+@startuml
+
+class RuntimeException
+class AlbumTrackNotFoundException
+class InvalidAttributeValueException
+class PlaylistNotFoundException
+
+AlbumTrackNotFoundException --|> RuntimeException
+InvalidAttributeValueException --|> RuntimeException
+PlaylistNotFoundException --|> RuntimeException
+
+class AddSongToPlaylistActivity {
+- log : Logger
+- playlistDao : PlaylistDao
+- albumTrackDao : AlbumTrackDao
++ AddSongToPlaylistActivity()
++ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
+}
+
+class CreatePlaylistActivity {
+- log : Logger
+- playlistDao : PlaylistDao
++ CreatePlaylistActivity()
++ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
+}
+
+class GetPlaylistActivity {
+- log : Logger
+- playlistDao : PlaylistDao
++ GetPlaylistActivity()
++ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
+}
+
+class GetPlaylistSongsActivity {
+- log : Logger
+- playlistDao : PlaylistDao
++ GetPlaylistSongsActivity()
++ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
+}
+
+class UpdatePlaylistActivity {
+- log : Logger
+- playlistDao : PlaylistDao
++ UpdatePlaylistActivity()
++ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
+}
+
+class Playlist {
+- id : String
+- songList : AlbumTrack
+}
+
+class AlbumTrackDao {
++ AlbumTrackDao()
+}
+
+class PlaylistDao {
++ PlaylistDao()
++ getPlaylist() : Playlist
+}
+
+interface RequestHandler
+
+AddSongToPlaylistActivity ..|> RequestHandler
+Logger --o AddSongToPlaylistActivity
+PlaylistDao --o AddSongToPlaylistActivity
+
+AddSongToPlaylistActivity o-- AlbumTrackDao
+
+CreatePlaylistActivity ..|> RequestHandler
+Logger --o CreatePlaylistActivity
+PlaylistDao --o CreatePlaylistActivity
+
+GetPlaylistActivity ..|> RequestHandler
+Logger --o GetPlaylistActivity
+PlaylistDao --o GetPlaylistActivity
+
+GetPlaylistSongsActivity ..|> RequestHandler
+Logger --o GetPlaylistSongsActivity
+PlaylistDao --o GetPlaylistSongsActivity
+
+UpdatePlaylistActivity ..|> RequestHandler
+Logger --o UpdatePlaylistActivity
+PlaylistDao --o UpdatePlaylistActivity
+
+AlbumTrack o-- Playlist
+@enduml
