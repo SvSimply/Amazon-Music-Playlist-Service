@@ -22,42 +22,55 @@ class CreatePlaylistActivity {
 - log : Logger
 - playlistDao : PlaylistDao
 + CreatePlaylistActivity()
-+ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
++ handleRequest(CreatePlaylistRequest) : CreatePlaylistResult
 }
 
 class GetPlaylistActivity {
 - log : Logger
 - playlistDao : PlaylistDao
 + GetPlaylistActivity()
-+ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
++ handleRequest(GetPlaylistRequest) : GetPlaylistResult
 }
 
 class GetPlaylistSongsActivity {
 - log : Logger
 - playlistDao : PlaylistDao
 + GetPlaylistSongsActivity()
-+ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
++ handleRequest(GetPlaylistSongsRequest) : GetPlaylistSongsResult
 }
 
 class UpdatePlaylistActivity {
 - log : Logger
 - playlistDao : PlaylistDao
 + UpdatePlaylistActivity()
-+ handleRequest(AddSongToPlaylistRequest) : AddSongToPlaylistResult
++ handleRequest(UpdatePlaylistRequest) : UpdatePlaylistResult
 }
 
 class Playlist {
-- id : String
-- songList : AlbumTrack
+- @DynamoDBHashKey id : String
+- name : String
+- customerId : String
+- songCount : Integer
+- tags : Set<String>
+- songList : List<AlbumTrack>
 }
 
 class AlbumTrackDao {
+dynamoDbMapper : DynamoDBMapper
 + AlbumTrackDao()
 }
 
 class PlaylistDao {
+dynamoDbMapper : DynamoDBMapper
 + PlaylistDao()
-+ getPlaylist() : Playlist
++ getPlaylist(String) : Playlist
+}
+
+class AlbumTrack {
+- @DynamoDBHashKey asin : String
+- @DynamoDBRangeKey trackNumber : Integer
+- albumName : String
+- songTitle : String
 }
 
 interface RequestHandler
