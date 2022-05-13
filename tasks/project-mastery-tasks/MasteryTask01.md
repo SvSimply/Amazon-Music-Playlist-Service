@@ -68,36 +68,34 @@ relate to each other:
   * You should be able to include any number of the appropriate dots (`.`) or
     dashes (`-`) in your lines (`o-` or `o--` or `o---`) to suit your diagram layout
   * Avoid adding labels to your relationships between types:
-
-    |      |    |    |
-    |-----:|:---|:---|
-    | YES: | `ClassA o-- ClassB`          |   |
-    |  NO: | `ClassA o-- "1:many" ClassB` | "1:many" label may cause tests to fail |
+  
+|-----:|:---|:---|
+| YES: | `ClassA o-- ClassB`          |   |
+|  NO: | `ClassA o-- "1:many" ClassB` | "1:many" label may cause tests to fail |
 
   * Include spaces between your relationship lines and the types in the relationship:
 
-    |      |    |    |
-    |-----:|:---|:---|
-    | YES: | `ClassA o-- ClassB` |   |
-    |  NO: | `ClassA o--ClassB`  | line is touching ClassB                 |
-    |  NO: | `ClassAo--ClassB`   | even worse! line is touching both types |
+|-----:|:---|:---|
+| YES: | `ClassA o-- ClassB` |   |
+|  NO: | `ClassA o--ClassB`  | line is touching ClassB                 |
+|  NO: | `ClassAo--ClassB`   | even worse! line is touching both types |
 
   * Make your **implements** relationships (if any) use the dotted line notation,
     and the "closed arrowhead":
 
-    |      |    |    |
-    |-----:|:---|:---|
-    | YES: | <code>ClassA ..&#124;> TypeB</code> |   |
-    |  NO: | `ClassA ..> TypeB`                  | use closed arrowhead instead |
-    |  NO: | <code>ClassA --&#124;> TypeB</code> | use dotted line instead      |
+
+|-----:|:---|:---|
+| YES: | <code>ClassA ..&#124;> TypeB</code> |   |
+|  NO: | `ClassA ..> TypeB`                  | use closed arrowhead instead |
+|  NO: | <code>ClassA --&#124;> TypeB</code> | use dotted line instead      |
   * Make your **extends**/**inherits** relationships (if any) use the solid line
     notation, and make the "closed arrowhead":
 
-    |      |    |    |
-    |-----:|:---|:---|
-    | YES: | <code>SubClass --&#124;> SuperClass</code> |   |
-    |  NO: | `SubClass --> SuperClass`                  | use closed arrowhead instead |
-    |  NO: | <code>SubClass ..&#124;> SuperClass</code> | use solid line instead      |
+
+|-----:|:---|:---|
+| YES: | <code>SubClass --&#124;> SuperClass</code> |   |
+|  NO: | `SubClass --> SuperClass`                  | use closed arrowhead instead |
+|  NO: | <code>SubClass ..&#124;> SuperClass</code> | use solid line instead      |
   * If your TCTs are failing on this milestone, be sure to read the build output
     carefully. In particular:
     * pay attention to the **name of the test that failed**. This will tell you which

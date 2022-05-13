@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -64,7 +65,12 @@ public class Playlist {
     }
 
     public void setTags(Set<String> tags) {
-        this.tags = tags;
+        if (tags == null) {
+            this.tags = new HashSet<>();
+            tags.add("null");
+        } else {
+            this.tags = tags;
+        }
     }
 
     // PARTICIPANTS: You do not need to modify the songList getters/setters or annotations
