@@ -1,10 +1,15 @@
 package com.amazon.ata.music.playlist.service.activity;
 
+import com.amazon.ata.music.playlist.service.converters.ModelConverter;
+import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
+import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeChangeException;
+import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeValueException;
 import com.amazon.ata.music.playlist.service.models.PlaylistModel;
 import com.amazon.ata.music.playlist.service.models.requests.UpdatePlaylistRequest;
 import com.amazon.ata.music.playlist.service.models.results.UpdatePlaylistResult;
 import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao;
 
+import com.amazon.ata.music.playlist.service.util.MusicPlaylistServiceUtils;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
@@ -50,8 +55,28 @@ public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequ
     public UpdatePlaylistResult handleRequest(final UpdatePlaylistRequest updatePlaylistRequest, Context context) {
         log.info("Received UpdatePlaylistRequest {}", updatePlaylistRequest);
 
+        // Check request data
+        if (updatePlaylistRequest.getCustomerId().equals(updatePlaylistRequest.getId())) {
+            throw new InvalidAttributeChangeException("Customer Id and Playlist Id couldn't be the same");
+        }
+
+        if (! MusicPlaylistServiceUtils.isValidString(updatePlaylistRequest.getName()) ||
+                ! MusicPlaylistServiceUtils.isValidString(updatePlaylistRequest.getCustomerId())) {
+            throw new InvalidAttributeValueException("The name of playlist and customer Id should not contain \" ' \\ symbols.");
+        }
+
+        Playlist playlist = playlistDao.getPlaylist(updatePlaylistRequest.getId());
+
+        if (playlist.getCustomerId().equals(updatePlaylistRequest.getCustomerId())) {
+            playlist.setName(updatePlaylistRequest.getName());
+        } else {
+            throw new InvalidAttributeChangeException("Customer Id is changed");
+        }
+
+        playlistDao.savePlaylist(playlist);
+
         return UpdatePlaylistResult.builder()
-                .withPlaylist(new PlaylistModel())
+                .withPlaylist(new ModelConverter().toPlaylistModel(playlist))
                 .build();
     }
 }

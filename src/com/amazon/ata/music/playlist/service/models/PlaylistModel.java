@@ -128,7 +128,12 @@ public class PlaylistModel {
 
         public Builder withTags(Set<String> tagsToUse) {
             this.tags = new ArrayList<String>();
-            this.tags.addAll(tagsToUse);
+            if (tagsToUse == null) {
+                this.tags.add("null");
+            } else {
+                this.tags.addAll(tagsToUse);
+            }
+
             return this;
         }
 
