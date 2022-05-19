@@ -1,7 +1,10 @@
 package com.amazon.ata.music.playlist.service.models.results;
 
+import com.amazon.ata.music.playlist.service.converters.ModelConverter;
+import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.models.SongModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetPlaylistSongsResult {
@@ -26,6 +29,7 @@ public class GetPlaylistSongsResult {
 
         public Builder withSongList(List<SongModel> songListToUse) {
             this.songList = songListToUse;
+
             return this;
         }
 
