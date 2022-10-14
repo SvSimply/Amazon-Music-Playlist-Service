@@ -5,10 +5,14 @@ class RuntimeException
 class AlbumTrackNotFoundException
 class InvalidAttributeValueException
 class PlaylistNotFoundException
+class InvalidAttributeException
+class InvalidAttributeChangeException
 
 AlbumTrackNotFoundException --|> RuntimeException
-InvalidAttributeValueException --|> RuntimeException
+InvalidAttributeException --|> RuntimeException
 PlaylistNotFoundException --|> RuntimeException
+InvalidAttributeValueException --|> InvalidAttributeException
+InvalidAttributeChangeException --|> InvalidAttributeException
 
 class AddSongToPlaylistActivity {
 - log : Logger
